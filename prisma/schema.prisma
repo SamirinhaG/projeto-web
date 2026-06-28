@@ -18,6 +18,7 @@ model Aluno {
   nome      String
   matricula String @unique
   email     String @unique
+  senha     String // Novo campo adicionado
 }
 
 model Paciente {
