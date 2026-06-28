@@ -6,44 +6,22 @@ datasource db {
   provider = "postgresql"
 }
 
-
-// 1. TABELA ALUNO
+model Admin {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  login String @unique
+  senha String 
+}
 
 model Aluno {
-  id           Int           @id @default(autoincrement())
-  nome         String
-  matricula    String        @unique
-  email        String        @unique
-  
-  pacientes    Paciente[]    
-  solicitacoes Solicitacao[] 
+  id        Int    @id @default(autoincrement())
+  nome      String
+  matricula String @unique
+  email     String @unique
 }
-
-
-// 2. TABELA PACIENTE (População)
 
 model Paciente {
-  id                 Int           @id @default(autoincrement())
-  nome               String
-  telefone           String
-  status             String        @default("AGUARDANDO") 
-  
-  alunoResponsavelId Int?          
-  aluno              Aluno?        @relation(fields: [alunoResponsavelId], references: [id])
-  
-  solicitacoes       Solicitacao[]
-}
-
-
-// 3. TABELA SOLICITAÇÃO 
-
-model Solicitacao {
-  id         Int      @id @default(autoincrement())
-  data       DateTime @default(now()) 
-  status     String   @default("PENDENTE") 
-  
-  alunoId    Int
-  pacienteId Int
-  aluno      Aluno    @relation(fields: [alunoId], references: [id])
-  paciente   Paciente @relation(fields: [pacienteId], references: [id])
+  id      Int    @id @default(autoincrement())
+  nome    String
+  status  String @default("AGUARDANDO")
 }
