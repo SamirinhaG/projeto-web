@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dental Campus</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#ffffff;
+}
+
+/* ── SEÇÃO 1 — igual ao seu, só adicionei o fundo ── */
+
+.hero{
+    display:flex;
+    min-height:100vh;
+    position:relative;
+}
+
+.hero-bg{
+    position:absolute;
+    inset:0;
+    background-image:url('https://unicatolicaquixada.edu.br/wp-content/uploads/2023/04/Banner_Top_portaria_placido-jpg.webp');
+    background-size:cover;
+    background-position:center;
+    filter:brightness(0.35);
+    z-index:0;
+}
+
+.container{
+    display:flex;
+    width:100%;
+    position:relative;
+    z-index:1;
+}
+
+.left{
+    width:55%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:80px;
+}
+
+.logo{
+    color:#FF6801;
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:60px;
+    line-height:1.1;
+    color:#ffffff;
+    margin-bottom:25px;
+}
+
+.highlight{
+    color:#FF6801;
+}
+
+.description{
+    color:#cccccc;
+    font-size:18px;
+    line-height:1.8;
+    max-width:550px;
+    margin-bottom:40px;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+}
+
+.btn-primary{
+    background:#FF6801;
+    color:white;
+    text-decoration:none;
+    padding:16px 32px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+}
+
+.btn-secondary{
+    border:2px solid #FF6801;
+    color:#FF6801;
+    text-decoration:none;
+    padding:16px 32px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-secondary:hover{
+    background:#FFF4EC;
+}
+
+.right{
+    width:45%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.card{
+    background:white;
+    width:500px;
+    height: 500px;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.card h3{
+    color:#333;
+    margin-bottom:20px;
+    font-size:30px;
+}
+
+.item{
+    padding:40px;
+    border-radius:10px;
+    background:#fafafa;
+    margin-bottom:8px;
+}
+
+.item strong{
+    display:block;
+    color:#333;
+    font-size:20px;
+}
+
+.item span{
+    color:#777;
+    font-size:18px;
+}
+
+.footer{
+    position:absolute;
+    bottom:30px;
+    left:80px;
+    color:#aaaaaa;
+    font-size:14px;
+    z-index:1;
+}
+
+/* ── SEÇÃO 2 — aparece ao rolar ── */
+
+.sobre{
+    background:#fff;
+    padding:100px 80px;
+    display:flex;
+    gap:80px;
+    align-items:center;
+}
+
+.sobre-texto{
+    flex:1;
+}
+
+.sobre-texto h2{
+    font-size:40px;
+    color:#222;
+    margin-bottom:20px;
+    line-height:1.2;
+}
+
+.sobre-texto h2 span{
+    color:#FF6801;
+}
+
+.sobre-texto p{
+    color:#666;
+    font-size:17px;
+    line-height:1.8;
+    margin-bottom:16px;
+}
+
+.sobre-foto{
+    flex:1;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+    max-width:480px;
+}
+
+.sobre-foto img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    display:block;
+}
+
+/* ── SEÇÃO 3 — como funciona ── */
+
+.como{
+    background:#f8f8f8;
+    padding:100px 80px;
+    text-align:center;
+}
+
+.como h2{
+    font-size:40px;
+    color:#222;
+    margin-bottom:12px;
+}
+
+.como h2 span{
+    color:#FF6801;
+}
+
+.como .subtitulo{
+    color:#888;
+    font-size:17px;
+    margin-bottom:60px;
+}
+
+.passos{
+    display:flex;
+    gap:30px;
+    justify-content:center;
+}
+
+.passo{
+    background:white;
+    border-radius:16px;
+    padding:35px 25px;
+    width:220px;
+    box-shadow:0 8px 24px rgba(0,0,0,.07);
+    position:relative;
+}
+
+.passo .numero{
+    width:44px;
+    height:44px;
+    background:#FF6801;
+    color:white;
+    border-radius:50%;
+    font-size:18px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 20px;
+}
+
+.passo strong{
+    display:block;
+    color:#222;
+    font-size:16px;
+    margin-bottom:10px;
+}
+
+.passo p{
+    color:#888;
+    font-size:14px;
+    line-height:1.6;
+}
+
+/* ── RODAPÉ ── */
+
+.rodape{
+    background:#222;
+    color:#aaa;
+    text-align:center;
+    padding:30px;
+    font-size:14px;
+}
+
+.rodape span{
+    color:#FF6801;
+}
+
+</style>
+</head>
+<body>
+
+<!-- SEÇÃO 1 — sua home original com fundo da faculdade -->
+<section class="hero">
+
+    <div class="hero-bg"></div>
+
+    <div class="container">
+
+        <div class="left">
+
+            <div class="logo">
+                🦷 DENTAL CAMPUS
+            </div>
+
+            <h1>
+                Conectando pacientes e
+                estudantes de <span class="highlight">Odontologia</span>
+            </h1>
+
+            <p class="description">
+                Uma plataforma que facilita o acesso da população aos
+                atendimentos odontológicos universitários e auxilia os
+                alunos no acompanhamento de seus pacientes.
+            </p>
+
+            <div class="buttons">
+                <a href="cadastro.html" class="btn-primary">
+                    Quero ser atendido
+                </a>
+
+                <a href="login.html" class="btn-secondary">
+                    Entrar
+                </a>
+            </div>
+
+            <div class="footer">
+                Projeto acadêmico UFC • Odontologia Católica
+            </div>
+
+        </div>
+
+        <div class="right">
+
+            <div class="card">
+
+                <h3>Atendimentos Universitários</h3>
+
+                <div class="item">
+                    <strong>Cadastro Simplificado</strong>
+                    <span>Solicite atendimento em poucos minutos</span>
+                </div>
+
+                <div class="item">
+                    <strong>Acompanhamento</strong>
+                    <span>Organização dos pacientes pelos alunos</span>
+                </div>
+
+                <div class="item">
+                    <strong>Prontuário Digital</strong>
+                    <span>Informações centralizadas e seguras</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- SEÇÃO 2 — sobre a clínica, aparece ao rolar -->
+<section class="sobre">
+
+    <div class="sobre-texto">
+
+        <h2>A clínica <span>Odontológica</span><br>da Católica de Quixadá</h2>
+
+        <p>
+            A Clínica Odontológica da Universidade Católica de Quixadá oferece
+            atendimento gratuito à população, realizado por alunos do curso de
+            Odontologia supervisionados por professores experientes.
+        </p>
+
+        <p>
+            Cada aluno precisa cumprir uma meta de procedimentos por semestre —
+            como limpezas e restaurações. O <strong>Dental Campus</strong> foi criado
+            para facilitar esse processo, conectando quem precisa de atendimento
+            com quem precisa de pacientes.
+        </p>
+
+    </div>
+
+    <div class="sobre-foto">
+        <img
+            src="https://unicatolicaquixada.edu.br/wp-content/uploads/2023/04/Banner_Top_portaria_placido-jpg.webp"
+            alt="Fachada da Católica de Quixadá">
+    </div>
+
+</section>
+
+<!-- SEÇÃO 3 — como funciona -->
+<section class="como">
+
+    <h2>Como <span>funciona?</span></h2>
+    <p class="subtitulo">Simples, rápido e sem burocracia</p>
+
+    <div class="passos">
+
+        <div class="passo">
+            <div class="numero">1</div>
+            <strong>Cadastre-se</strong>
+            <p>Preencha o formulário com seus dados e descreva o que precisa.</p>
+        </div>
+
+        <div class="passo">
+            <div class="numero">2</div>
+            <strong>Aguarde</strong>
+            <p>Um aluno em formação vai analisar seu caso e entrar em contato.</p>
+        </div>
+
+        <div class="passo">
+            <div class="numero">3</div>
+            <strong>Compareça</strong>
+            <p>Vá até a clínica no dia marcado e receba seu atendimento.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- RODAPÉ -->
+<footer class="rodape">
+    Projeto acadêmico <span>UFC</span> • Odontologia Católica de Quixadá
+</footer>
+
+</body>
+</html>

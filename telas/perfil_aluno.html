@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Campus - Perfil do Aluno</title>
+    <style>
+        * { margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Inter', sans-serif; 
+        }
+        body { background: #f4f7f6; 
+            padding: 30px; 
+            min-height: 100vh; 
+        }
+        .header-perfil { 
+            background: white; 
+            padding: 25px 40px; 
+            border-radius: 15px; 
+            border: 2px solid #FF6801; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            margin-bottom: 30px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .header-perfil h1 { 
+            color: #333; 
+            font-size: 28px; 
+        }
+        .header-perfil .info-semestre { 
+            background: #FFF4EC; 
+            color: #FF6801; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            font-weight: 700; 
+        }
+        .meta-box { 
+            background: white; 
+            padding: 20px 30px; 
+            border-radius: 15px; 
+            margin-bottom: 30px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+        }
+        .meta-box h3 { 
+            margin-bottom: 15px; 
+            color: #444; 
+            border-left: 4px solid #FF6801; 
+            padding-left: 10px; 
+        }
+        .checklist-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; margin-bottom: 10px; font-size: 16px; color: #555; cursor: pointer; }
+        .checklist-item input { accent-color: #FF6801; width: 18px; height: 18px; }
+        .paineis-grid { 
+            display: flex; 
+            gap: 20px; }
+        .painel { 
+            flex: 1; 
+            background: white; 
+            border-radius: 15px; 
+            padding: 20px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+            min-height: 400px; 
+        }
+        .painel h3 { 
+            color: #333; 
+            margin-bottom: 20px; 
+            padding-bottom: 10px; 
+            border-bottom: 2px solid #f0f0f0; 
+        }
+        .card-paciente { 
+            background: #fafafa; 
+            border: 1px solid #ddd; 
+            border-radius: 10px; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            transition: 0.3s; 
+        }
+        .card-paciente:hover { 
+            border-color: #FF6801; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03); 
+        }
+        .card-paciente strong { 
+            display: block; 
+            color: #222; 
+            font-size: 16px; 
+            margin-bottom: 5px; 
+        }
+        .card-paciente p { 
+            font-size: 14px; 
+            color: #666; 
+            line-height: 1.4; 
+            margin-bottom: 12px; 
+        }
+        .btn-solicitar { 
+            background: #FF6801; 
+            color: white; 
+            border: none; 
+            padding: 8px 14px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            font-size: 14px; 
+            width: 100%; 
+            transition: 0.2s; 
+        }
+        .btn-solicitar:hover { 
+            opacity: 0.9; 
+        }
+        .status-tag { 
+            display: inline-block; 
+            font-size: 12px; 
+            padding: 4px 8px; 
+            border-radius: 12px; 
+            font-weight: 600; 
+        }
+        .status-pendente { 
+            background: #fef7e0; 
+            color: #b06000; 
+        }
+        .btn-sair { 
+            background: none; 
+            border: 1px solid #ccc; 
+            padding: 8px 16px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            color: #666; 
+        }
+        .btn-sair:hover { 
+            background: #f0f0f0; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-perfil">
+        <div>
+            <h1 id="boas-vindas">Olá, Aluno!</h1>
+            <p style="color: #888; font-size: 14px; margin-top: 5px;">🦷 Painel do Aluno - Dental Campus</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <span class="info-semestre" id="aluno-semestre">6° Semestre</span>
+            <button class="btn-sair" onclick="sair()">Sair</button>
+        </div>
+    </div>
+
+    <div class="meta-box">
+        <h3>Minhas Metas Clínicas do Semestre</h3>
+        <div id="lista-metas"></div>
+    </div>
+
+    <div class="paineis-grid">
+        <div class="painel">
+            <h3>Pacientes Disponíveis na Rede</h3>
+            <div id="painel-disponiveis"></div>
+        </div>
+
+        <div class="painel">
+            <h3>Meus Pacientes Atendidos</h3>
+            <div id="painel-atendidos"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let alunoLogado = JSON.parse(localStorage.getItem("aluno_logado"));
+            if (!alunoLogado) { window.location.href = "login.html"; return; }
+
+            document.getElementById("boas-vindas").innerText = `Olá, ${alunoLogado.nome}!`;
+            document.getElementById("aluno-semestre").innerText = alunoLogado.semestre;
+
+            renderizarMetas(alunoLogado);
+            renderizarListas();
+        });
+
+        function renderizarMetas(aluno) {
+            let container = document.getElementById("lista-metas");
+            container.innerHTML = "";
+            aluno.metas.forEach(meta => {
+                container.innerHTML += `
+                    <label class="checklist-item">
+                        <input type="checkbox" ${meta.feito ? 'checked' : ''} onchange="alternarMeta(${meta.id})">
+                        <span>${meta.texto}</span>
+                    </label>
+                `;
+            });
+        }
+
+        function renderizarListas() {
+            let alunoLogado = JSON.parse(localStorage.getItem("aluno_logado"));
+            let pacientesDoBanco = JSON.parse(localStorage.getItem("banco_pacientes")) || [];
+            let solicitacoes = JSON.parse(localStorage.getItem("solicitacoes_atendimento")) || [];
+
+            let divDisponiveis = document.getElementById("painel-disponiveis");
+            let divAtendidos = document.getElementById("painel-atendidos");
+
+            divDisponiveis.innerHTML = "";
+            divAtendidos.innerHTML = "";
+
+            // Renderiza Disponíveis
+            if (pacientesDoBanco.length === 0) {
+                divDisponiveis.innerHTML = "<p style='color:#aaa; font-size:14px;'>Nenhum paciente cadastrado. Cadastre um paciente na outra tela para testar!</p>";
+            } else {
+                pacientesDoBanco.forEach(p => {
+                    let jaTemDono = solicitacoes.some(s => s.pacienteId === p.id && s.status === "Aprovado");
+                    let jaFoiSolicitadoPorMim = solicitacoes.some(s => s.pacienteId === p.id && s.alunoMatricula === alunoLogado.matricula);
+
+                    if (!jaTemDono) {
+                        divDisponiveis.innerHTML += `
+                            <div class="card-paciente">
+                                <strong>👤 ${p.nome}</strong>
+                                <p> <strong> Idade: </strong> ${p.idade || "Não informado"} </p>
+                                <p><strong> Caso Relatado: </strong> ${p.prontuaria || p.prontuario || 'Não informado.'}</p>
+                                ${jaFoiSolicitadoPorMim 
+                                    ? '<span class="status-tag status-pendente">Aguardando Aprovação do ADM</span>' 
+                                    : `<button class="btn-solicitar" onclick="solicitarAtendimento(${p.id}, '${p.nome}', '${p.prontuaria || p.prontuario || 'Sem descrição'}')">Solicitar Atendimento</button>`
+                                }
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            // Renderiza Atendidos
+            let meusAtendidos = solicitacoes.filter(s => s.alunoMatricula === alunoLogado.matricula && s.status === "Aprovado");
+            if (meusAtendidos.length === 0) {
+                divAtendidos.innerHTML = "<p style='color:#aaa; font-size:14px;'>Você ainda não possui pacientes aprovados.</p>";
+            } else {
+                meusAtendidos.forEach(s => {
+                    divAtendidos.innerHTML += `
+                        <div class="card-paciente" style="border-left: 4px solid #137333;">
+                            <strong>👤 ${s.pacienteNome}</strong>
+                            <p> <strong> Idade: </strong> ${s.pacienteIdade || "Não informada"}</p>
+                            <p><strong>Caso Clínico: </strong> ${s.pacienteCaso}</p>
+                            <span class="status-tag" style="background:#e6f4ea; color:#137333;">Em Atendimento</span>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function solicitarAtendimento(pacienteId, pacienteNome, pacienteCaso) {
+            let alunoLogado = JSON.parse(localStorage.getItem("aluno_logado"));
+            let solicitacoes = JSON.parse(localStorage.getItem("solicitacoes_atendimento")) || [];
+
+            solicitacoes.push({
+                id: Date.now(),
+                alunoMatricula: alunoLogado.matricula,
+                alunoNome: alunoLogado.nome,
+                pacienteId: pacienteId,
+                pacienteNome: pacienteNome,
+                pacienteIdade: paciente?.idade || null,
+                pacienteCaso: pacienteCaso,
+                status: "Pendente"
+            });
+
+            localStorage.setItem("solicitacoes_atendimento", JSON.stringify(solicitacoes));
+            renderizarListas();
+        }
+
+        function alternarMeta(metaId) {
+            let alunoLogado = JSON.parse(localStorage.getItem("aluno_logado"));
+            let meta = alunoLogado.metas.find(m => m.id === metaId);
+            if (meta) meta.feito = !meta.feito;
+            localStorage.setItem("aluno_logado", JSON.stringify(alunoLogado));
+        }
+
+        function sair() {
+            localStorage.removeItem("aluno_logado");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

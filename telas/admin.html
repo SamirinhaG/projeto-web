@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Campus - Painel Administrativo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #f4f7f6; padding: 30px; min-height: 100vh; }
+        .header-admin { background: #FF6801; padding: 25px 40px; border-radius: 15px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .header-admin h1 { font-size: 28px; }
+        .container-solicitacoes { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .container-solicitacoes h2 { margin-bottom: 20px; color: #333; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        .card-solicitacao { background: #fafafa; border: 1px solid #ddd; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+        .card-solicitacao strong { font-size: 18px; color: #222; display: block; margin-bottom: 5px; }
+        .info-aluno { color: #FF6801; font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; }
+        .btn-adm { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px; border: none; margin-right: 10px; transition: 0.2s; }
+        .btn-aprovar { background: #e6f4ea; color: #137333; }
+        .btn-aprovar:hover { background: #d2ebd9; }
+        .btn-recusar { background: #fce8e6; color: #c5221f; }
+        .btn-recusar:hover { background: #fad4d0; }
+        .btn-sair { background: white; color: #FF6801; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="header-admin">
+        <div>
+            <h1>Painel do Professor / Administrador</h1>
+            <p style="opacity: 0.9; font-size: 14px; margin-top: 5px;">⚙️ Gerenciamento de Vínculos e Aprovações</p>
+        </div>
+        <button class="btn-sair" onclick="window.location.href='login.html'">Sair</button>
+    </div>
+
+    <div class="container-solicitacoes">
+        <h2>Solicitações de Atendimento Pendentes</h2>
+        <div id="lista-solicitacoes"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            renderizarSolicitacoes();
+        });
+
+        function renderizarSolicitacoes() {
+            let solicitacoes = JSON.parse(localStorage.getItem("solicitacoes_atendimento")) || [];
+            let pendentes = solicitacoes.filter(s => s.status === "Pendente");
+            let container = document.getElementById("lista-solicitacoes");
+
+            container.innerHTML = "";
+
+            if (pendentes.length === 0) {
+                container.innerHTML = "<p style='color:#aaa; font-size:16px;'>Não há nenhuma solicitação pendente dos alunos no momento.</p>";
+                return;
+            }
+
+            pendentes.forEach(s => {
+                container.innerHTML += `
+                    <div class="card-solicitacao">
+                        <span class="info-aluno">👨‍🎓 Aluno Solicitante: ${s.alunoNome} (Matrícula: ${s.alunoMatricula})</span>
+                        <strong>Paciente: ${s.pacienteNome}</strong>
+                        <p style="color:#555; margin: 10px 0 15px 0;"><strong>Caso Clínico:</strong> ${s.pacienteCaso}</p>
+                        <button class="btn-adm btn-aprovar" onclick="responderSolicitacao(${s.id}, 'Aprovado')">Aprovar Vínculo</button>
+                        <button class="btn-adm btn-recusar" onclick="responderSolicitacao(${s.id}, 'Recusado')">Recusar</button>
+                    </div>
+                `;
+            });
+        }
+
+        function responderSolicitacao(id, novoStatus) {
+            let solicitacoes = JSON.parse(localStorage.getItem("solicitacoes_atendimento")) || [];
+            let s = solicitacoes.find(item => item.id === id);
+            
+            if (s) {
+                s.status = novoStatus;
+            }
+
+            localStorage.setItem("solicitacoes_atendimento", JSON.stringify(solicitacoes));
+            renderizarSolicitacoes();
+        }
+    </script>
+</body>
+</html>

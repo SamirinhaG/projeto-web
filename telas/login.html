@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Campus</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#ffffff;
+}
+
+.container{
+    display:flex;
+    min-height:100vh;
+    background-color: aliceblue;
+}
+
+.right{
+    width:55%;
+    display:flex;
+    align-items: center; /* Ajustado apenas de flex para center para centralizar bonito na tela */
+    justify-content:center;
+    padding:0 60px;
+}
+
+.logo{
+    color:#FF6801;
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:60px;
+    line-height:1.1;
+    color:#222;
+    margin-bottom:25px;
+}
+
+.highlight{
+    color:#FF6801;
+}
+
+.description{
+    color:#666;
+    font-size:18px;
+    line-height:1.8;
+    max-width:550px;
+    margin-bottom:40px;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+}
+
+.btn1{
+    background:#FF6801;
+    color:white;
+    text-decoration:none;
+    padding:16px 32px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn1:focus{
+    outline: none;
+}
+
+.btn1:hover{
+    transform:translateY(-2px);
+}
+
+.btn2{
+    border:2px solid #FF6801;
+    color:#FF6801;
+    text-decoration:none;
+    padding:16px 32px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn2:hover{
+    background:#FFF4EC;
+}
+
+.left{
+    width:40%;
+    background:#FF6801;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 60px;
+}
+
+.card{
+    background:white;
+    width:420px;
+    min-height:540px;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    position: relative; /* Ajustado para manter o footer interno */
+}
+
+.card h3{
+    color:#333;
+    margin-bottom:20px;
+}
+
+.item{
+    padding:12px;
+    border-radius:10px;
+    border:solid 1px #FF6801;
+    background:#fafafa;
+    margin-bottom:10px;
+}
+
+.item strong{
+    display:block;
+    color:#333;
+}
+
+.item span{
+    color:#777;
+    font-size:14px;
+}
+
+footer{
+    position:absolute;
+    bottom:30px;
+    left:40px;
+    color:#888;
+    font-size:14px;
+}
+
+.login-box{
+    width: 100%;
+    max-width: 500px; /* Ajustado levemente para não estourar a proporção padrão de caixas de login */
+    margin: auto;
+    padding: 40px 60px;
+    background: white;
+    border: 2px solid #FF6801;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+}
+
+.login-box h2{
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group{
+    margin-bottom: 15px;
+}
+
+.form-group label{
+    display: block;
+    margin-bottom: 5px;
+    color: #444;
+    font-weight: 500;
+}
+
+.form-group input{
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+.form-group input:focus{
+    border-color: #FF6801;
+}
+
+/* Pequeno estilo adicionado apenas para mensagens de erro caso o aluno não exista */
+.msg-erro {
+    color: #c5221f;
+    background: #fce8e6;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    display: none;
+    text-align: center;
+    border: 1px solid #fad2cf;
+}
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <div class="card">
+                <h1> Já possui login?</h1>
+                <p class="description">Preencha suas informações ao lado.</p>
+                <div class="item">
+                    <h3> Se atente às informações e preencha corretamente seus dados.</h3>
+                </div>
+                <footer>Projeto acadêmico UFC • Odontologia Católica</footer>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="login-box">
+                <h2>Login do Aluno</h2>
+
+                <div id="mensagem-erro" class="msg-erro"></div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="nome" placeholder="Digite seu nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Matrícula</label>
+                        <input type="text" id="matricula" placeholder="Digite sua matrícula" required>
+                    </div>
+
+                    <button type="submit" class="btn1">Entrar</button>
+                </form>
+
+            </div>
+        </div>
+    </div>    
+
+    <script>
+        // 1. MODELO: Classe Aluno
+        class Aluno {
+            constructor(nome, matricula, metasArray) {
+                this.nome = nome;
+                this.matricula = matricula;
+                this.semestre = "6° Semestre"; // Padrão fixo pedido por você
+                this.metas = metasArray;       // Array com os itens do checklist
+            }
+        }
+
+        // 2. REPOSITÓRIO: Lista de alunos pré-estabelecidos
+        class AlunoRepository {
+            constructor() {
+                // Deixamos os alunos e suas metas pré-configurados
+                this._alunos = [
+                    new Aluno("Carlos Andrade", "1234", [
+                        { id: 1, texto: "Limpeza Profilática", feito: false },
+                        { id: 2, texto: "Restauração em Resina", feito: false }
+                    ]),
+                    new Aluno("Ana Maria", "5678", [
+                        { id: 1, texto: "Aplicação de Flúor", feito: false },
+                        { id: 2, texto: "Raspagem Periodontal", feito: false }
+                    ])
+                ];
+            }
+
+            // Realiza a verificação para saber se ele é um aluno cadastrado
+            autenticar(nome, matricula) {
+                return this._alunos.find(aluno => 
+                    aluno.nome.trim().toLowerCase() === nome.trim().toLowerCase() &&
+                    aluno.matricula.trim() === matricula.trim()
+                );
+            }
+        }
+
+        // 3. CAPTURA DOS EVENTOS DO FORMULÁRIO
+        document.addEventListener("DOMContentLoaded", () => {
+            let repoAlunos = new AlunoRepository();
+            let formulario = document.getElementById("loginForm");
+            let divErro = document.getElementById("mensagem-erro");
+
+            if (formulario) {
+                formulario.addEventListener("submit", (evento) => {
+                    evento.preventDefault(); // Impede o recarregamento
+
+                    let inputNome = document.getElementById("nome").value;
+                    let inputMatricula = document.getElementById("matricula").value;
+
+                    // Faz a verificação na nossa lista pré-estabelecida
+                    let alunoLogado = repoAlunos.autenticar(inputNome, inputMatricula);
+
+                    if (alunoLogado) {
+                        // Se o aluno existir, salvamos ele na sessão atual (localStorage)
+                        localStorage.setItem("aluno_logado", JSON.stringify(alunoLogado));
+                        
+                        // Redireciona para a página do perfil do aluno que faremos a seguir
+                        window.location.href = "perfil_aluno.html";
+                    } else {
+                        // Se não existir, mostra o aviso na tela
+                        divErro.innerText = "Aluno não autorizado! Verifique o Nome e a Matrícula.";
+                        divErro.style.display = "block";
+                    }
+                });
+            }
+        });
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+    let repoAlunos = new AlunoRepository();
+    let formulario = document.getElementById("loginForm");
+    let divErro = document.getElementById("mensagem-erro");
+
+    if (formulario) {
+        formulario.addEventListener("submit", (evento) => {
+            evento.preventDefault();
+
+            let inputNome = document.getElementById("nome").value.trim();
+            let inputMatricula = document.getElementById("matricula").value.trim();
+
+            // VERIFICAÇÃO NOVA: É o Administrador/Professor?
+            if (inputNome.toLowerCase() === "admin" && inputMatricula === "0000") {
+                // Redireciona direto para a nova tela do ADM
+                window.location.href = "admin.html";
+                return;
+            }
+
+            // Se não for ADM, verifica se é um dos alunos cadastrados
+            let alunoLogado = repoAlunos.autenticar(inputNome, inputMatricula);
+
+            if (alunoLogado) {
+                localStorage.setItem("aluno_logado", JSON.stringify(alunoLogado));
+                window.location.href = "perfil_aluno.html";
+            } else {
+                divErro.innerText = "Usuário não autorizado! Verifique os dados.";
+                divErro.style.display = "block";
+            }
+        });
+    }
+});
+    </script>
+
+</body>
+</html>
