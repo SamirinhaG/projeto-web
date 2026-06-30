@@ -61,7 +61,7 @@ h1{
 .buttons{
     display:flex;
     gap:15px;
-}
+}c
 
 .btn1{
     background:#FF6801;
@@ -246,8 +246,8 @@ footer{
             constructor(nome, matricula, metasArray) {
                 this.nome = nome;
                 this.matricula = matricula;
-                this.semestre = "6° Semestre"; // Padrão fixo pedido por você
-                this.metas = metasArray;       // Array com os itens do checklist
+                this.semestre = "6° Semestre"; 
+                this.metas = metasArray;       
             }
         }
 
@@ -320,7 +320,7 @@ footer{
             let inputNome = document.getElementById("nome").value.trim();
             let inputMatricula = document.getElementById("matricula").value.trim();
 
-            // Verifica se é ADM
+            // Se for o ADM, vai pra tela especial
             if (inputNome.toLowerCase() === "admin" && inputMatricula === "0000") {
                 // Redireciona direto para a nova tela do ADM
                 window.location.href = "admin.html";

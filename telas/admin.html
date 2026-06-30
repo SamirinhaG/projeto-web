@@ -129,7 +129,7 @@
                 container.innerHTML += `
                     <div class="card-solicitacao">
                         <span class="info-aluno">👨‍🎓 Aluno Solicitante: ${s.alunoNome} (Matrícula: ${s.alunoMatricula})</span>
-                        <strong>Paciente: ${s.pacienteNome}</strong>
+                        <strong>Paciente: ${s.pacienteNome} Idade: ${s.pacienteIdade}</strong>
                         <p style="color:#555; margin: 10px 0 15px 0;"><strong>Caso Clínico:</strong> ${s.pacienteCaso}</p>
                         <button class="btn-adm btn-aprovar" onclick="responderSolicitacao(${s.id}, 'Aprovado')">Aprovar Vínculo</button>
                         <button class="btn-adm btn-recusar" onclick="responderSolicitacao(${s.id}, 'Recusado')">Recusar</button>

@@ -220,10 +220,10 @@
                             <div class="card-paciente">
                                 <strong>👤 ${p.nome}</strong>
                                 <p> <strong> Idade: </strong> ${p.idade || "Não informado"} </p>
-                                <p><strong> Caso Relatado: </strong> ${p.prontuaria || p.prontuario || 'Não informado.'}</p>
+                                <p><strong> Caso Relatado: </strong> ${p.prontuario || p.prontuario || 'Não informado.'}</p>
                                 ${jaFoiSolicitadoPorMim 
                                     ? '<span class="status-tag status-pendente">Aguardando Aprovação do ADM</span>' 
-                                    : `<button class="btn-solicitar" onclick="solicitarAtendimento(${p.id}, '${p.nome}', '${p.prontuaria || p.prontuario || 'Sem descrição'}')">Solicitar Atendimento</button>`
+                                    : `<button class="btn-solicitar" onclick="solicitarAtendimento(${p.id}, '${p.nome}','${p.idade}', '${p.prontuaria || p.prontuario || 'Sem descrição'}')">Solicitar Atendimento</button>`
                                 }
                             </div>
                         `;
@@ -249,7 +249,7 @@
             }
         }
 
-        function solicitarAtendimento(pacienteId, pacienteNome, pacienteCaso) {
+        function solicitarAtendimento(pacienteId, pacienteNome, pacienteIdade, pacienteCaso) {
             let alunoLogado = JSON.parse(localStorage.getItem("aluno_logado"));
             let solicitacoes = JSON.parse(localStorage.getItem("solicitacoes_atendimento")) || [];
 
@@ -259,7 +259,7 @@
                 alunoNome: alunoLogado.nome,
                 pacienteId: pacienteId,
                 pacienteNome: pacienteNome,
-                pacienteIdade: paciente?.idade || null,
+                pacienteIdade: pacienteIdade,
                 pacienteCaso: pacienteCaso,
                 status: "Pendente"
             });
