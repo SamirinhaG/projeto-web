@@ -27,7 +27,7 @@ body{
 .right{
     width:55%;
     display:flex;
-    align-items: center; /* Ajustado apenas de flex para center para centralizar bonito na tela */
+    align-items: center; 
     justify-content:center;
     padding:0 60px;
 }
@@ -114,7 +114,7 @@ h1{
     padding:40px;
     border-radius:20px;
     box-shadow:0 15px 40px rgba(0,0,0,.15);
-    position: relative; /* Ajustado para manter o footer interno */
+    position: relative; 
 }
 
 .card h3{
@@ -150,7 +150,7 @@ footer{
 
 .login-box{
     width: 100%;
-    max-width: 500px; /* Ajustado levemente para não estourar a proporção padrão de caixas de login */
+    max-width: 500px; 
     margin: auto;
     padding: 40px 60px;
     background: white;
@@ -189,7 +189,6 @@ footer{
     border-color: #FF6801;
 }
 
-/* Pequeno estilo adicionado apenas para mensagens de erro caso o aluno não exista */
 .msg-erro {
     color: #c5221f;
     background: #fce8e6;
@@ -242,7 +241,7 @@ footer{
     </div>    
 
     <script>
-        // 1. MODELO: Classe Aluno
+        // Classe Aluno
         class Aluno {
             constructor(nome, matricula, metasArray) {
                 this.nome = nome;
@@ -252,7 +251,7 @@ footer{
             }
         }
 
-        // 2. REPOSITÓRIO: Lista de alunos pré-estabelecidos
+        // REPOSITÓRIO: Lista de alunos pré-estabelecidos
         class AlunoRepository {
             constructor() {
                 // Deixamos os alunos e suas metas pré-configurados
@@ -277,7 +276,7 @@ footer{
             }
         }
 
-        // 3. CAPTURA DOS EVENTOS DO FORMULÁRIO
+        // CAPTURA DOS EVENTOS DO FORMULÁRIO
         document.addEventListener("DOMContentLoaded", () => {
             let repoAlunos = new AlunoRepository();
             let formulario = document.getElementById("loginForm");
