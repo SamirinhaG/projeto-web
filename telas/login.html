@@ -289,7 +289,7 @@ footer{
                     let inputNome = document.getElementById("nome").value;
                     let inputMatricula = document.getElementById("matricula").value;
 
-                    // Faz a verificação na nossa lista pré-estabelecida
+                    // Faz a verificação na lista pré-estabelecida
                     let alunoLogado = repoAlunos.autenticar(inputNome, inputMatricula);
 
                     if (alunoLogado) {
@@ -320,7 +320,7 @@ footer{
             let inputNome = document.getElementById("nome").value.trim();
             let inputMatricula = document.getElementById("matricula").value.trim();
 
-            // VERIFICAÇÃO NOVA: É o Administrador/Professor?
+            // Verifica se é ADM
             if (inputNome.toLowerCase() === "admin" && inputMatricula === "0000") {
                 // Redireciona direto para a nova tela do ADM
                 window.location.href = "admin.html";

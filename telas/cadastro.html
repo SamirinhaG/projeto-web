@@ -193,7 +193,7 @@ button:hover{
 </div>
 
 <script>
-    // 1. MODELO: Classe Paciente Simplificada
+    
     class Paciente {
         constructor(id, nome, telefone, idade, email, prontuárioTexto = null) {
             this.id = id;                      
@@ -203,12 +203,12 @@ button:hover{
             this.email = email;
             this.status = "Ativo";
             this.alunoResponsavel = null;
-            this.prontuario = prontuárioTexto; // A área de texto simplificada que você pediu
+            this.prontuario = prontuárioTexto; 
 
         }
     }
 
-    // 2. REPOSITÓRIO: Gerenciador com salvamento real (localStorage)
+    // REPOSITÓRIO: Gerenciador com salvamento real (localStorage)
     class PacienteRepository {
         constructor() {
             // Tenta pegar a lista salva no navegador. Se não existir nada, começa com uma lista vazia.
@@ -246,7 +246,7 @@ button:hover{
         }
     }
 
-    // 3. EVENTOS: Controle do Formulário da Tela
+    // EVENTOS: Controle do formulário da tela
     document.addEventListener("DOMContentLoaded", () => {
         let dbPacientes = new PacienteRepository();
         
@@ -267,7 +267,7 @@ button:hover{
                 let inputEmail = document.getElementById("email").value;
                 let inputDescricao = document.getElementById("descricao").value;
 
-                // 1ª VALIDAÇÃO: Não deixa mandar se os obrigatórios estiverem vazios
+                // VALIDAÇÃO 1: Não deixa mandar se os obrigatórios estiverem vazios
                 if (inputNome.trim() === "" || inputTelefone.trim() === "" || inputDescricao.trim() === "" || inputIdade.trim() === "") {
                     msgStatus.innerText = "Por favor, preencha todos os campos obrigatórios!";
                     msgStatus.className = "mensagem erro";
@@ -275,7 +275,7 @@ button:hover{
                     return;
                 }
 
-                // 2ª VALIDAÇÃO: Checa se já existe no repositório
+                // VALIDAÇÃO 2: Checa se já existe no repositório
                 let pacienteExistente = dbPacientes.buscarExistente(inputNome, inputTelefone);
 
                 if (pacienteExistente) {
